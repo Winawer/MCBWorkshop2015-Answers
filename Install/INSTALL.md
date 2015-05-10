@@ -2,6 +2,10 @@
 
 For the workshop you will require a laptop computer that you have administrator access to (i.e. you have the administartor password) in order to install software.
 
+**Important:**  The software for each section must be installed and running properly on your computer *before* the workshop begins.  **We strongly recommend that you attempt to install the software well before the workshop begins.  Do not leave it until the weekend or morning before to try installing and running the software.** With the number of people attending, we simply will not have time to sort out your installation problems after the workshop has started.  **If you do not have the required software installed and running, you will be left behind.**  
+
+If you have trouble setting up the required software, we will be holding technical support office hours in the days before the workshop to assist you in person; watch your email for more information.
+
 ### Section 1: Unix and Git
 
 For this section you will require a working Unix-style command line and git installation.  
