@@ -50,8 +50,8 @@ If your installation is working, a notebook interface should come up in your bro
 
 ### Section 3: R
 
------
+.... Brad ....
 
 ### Section 4: Capstone
 
-If you attne
+If you attend the other three sections, you will already have all the software you require installed.  If you have not attended one or more of the lead-up sections, please refer to their respective installation instructions in this document.
