@@ -1,6 +1,6 @@
 ## Installation and requirements
 
-For the workshop you will require a laptop computer that you have administrator access to (i.e. you have the administartor password) in order to install software.
+For the workshop you will require a laptop computer that you have administrator access to (i.e. you have the administrator password) in order to install software.
 
 **Important:**  The software for each section must be installed and running properly on your computer *before* the workshop begins.  **We strongly recommend that you attempt to install the software well before the workshop begins.  Do not leave it until the weekend or morning before to try installing and running the software.** With the number of people attending, we simply will not have time to sort out your installation problems after the workshop has started.  **If you do not have the required software installed and running when the workshop begins, you will be left behind.  There will be no exceptions to this rule.**
 
@@ -18,7 +18,7 @@ Every installation of OS X should come with Terminal.app that provides a Unix-st
 
 Git installation requires a separate download, which you can find [here](http://git-scm.com/downloads).  
 
-For the more adventerous, a powerful software installation manager for OS X can be found [here](http://brew.sh/);  after installation, run *brew install git*.
+For the more adventurous, a powerful software installation manager for OS X can be found [here](http://brew.sh/);  after installation, run *brew install git*.
 
 #### Linux
 
