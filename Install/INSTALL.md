@@ -45,6 +45,10 @@ For Windows, we will use Git for Windows, also known as "Git Bash".  You can dow
 
 ### Section 2: Python
 
+The major choices for installing Python are to use a self-contained distribution or to use a system-installed Python that came with your operating system (unless you are on Windows).  To aid your decision-making, we provide a simple flowchart:
+
+![Installation flowchart](images/install-flowchart.png)
+
 For the Python section, novices to Python development should use the Anaconda Python distribution, which is free and can be downloaded [here](https://store.continuum.io/cshop/anaconda/).  Anaconda Python is cross-platform (Windows, Linux, OS X), and has the advantage of coming with many important Python libraries (such as numpy, scipy, scikit-*, ipython, matplotlib, etc.) preinstalled.  
 
 Once you have installed Anaconda, please read the [Anaconda quickstart guide](https://store.continuum.io/static/img/Anaconda-Quickstart.pdf) and make sure that your installation works.
