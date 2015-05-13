@@ -53,7 +53,7 @@ For the Python section, novices to Python development should use the Anaconda Py
 
 Once you have installed Anaconda, please read the [Anaconda quickstart guide](https://store.continuum.io/static/img/Anaconda-Quickstart.pdf) and make sure that your installation works.
 
-If you do not wish to use Anaconda, please make sure to have the following libraries installed;  you can use *pip* to install most of these:
+If you do not wish to use Anaconda, please make sure to have the following libraries installed;  you can use [*pip*](https://pip.pypa.io/en/latest/installing.html) to install most of these:
 
 * numpy
 * ipython
