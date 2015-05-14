@@ -16,7 +16,9 @@ Every installation of OS X should come with Terminal.app that provides a Unix-st
 
 ![Terminal on OS X](images/terminal-osx.png)
 
-Git installation requires a separate download, which you can find [here](http://git-scm.com/downloads).  
+Git installation requires a separate download, which you can find [here](http://git-scm.com/downloads).  If you are asked about the command line developer tools (see image), click 'Install' and wait for the command line tools to install;  after that, git should be working properly.
+
+![Xcode prompt](images/git-install-xcode.png)
 
 For the more adventurous, a powerful software installation manager for OS X can be found [here](http://brew.sh/);  after installation, run *brew install git*.
 
