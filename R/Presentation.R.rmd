@@ -50,7 +50,7 @@ This follows the standard R format of a function name (in this case **getwd**), 
 When we want to change the working directory to another dedicated directory, we need to use the function **setwd** and include the new directory path:
 
 ```{r}
-setwd("/media/brad/Data/Documents/softwareCarp") 
+setwd("/media/brad/Data/Documents/softwareCarp/MCBWorkshop2015") 
 ```
 
 **Exercise 2: Make this work on your computer**
@@ -66,15 +66,15 @@ As in Unix, if we want to navigate up a level in the file hierarchy, we can use 
 
 To read data from a file  (the results of a gardenia-growing race, involving 3 friends), we use a function specific to the type of file: 
 ```{r}
-read.csv("toy.csv")
+read.csv("./data_files/gardenia.csv")
 ```
 
-You notice that this doesn't do anything except print out the contents of the file "toy.csv". The reason is, that we haven't assigned the contents of the file to any object (a variable). We can create a new variable in R easily, using either **=** or **<-**
+You notice that this doesn't do anything except print out the contents of the file "gardenia.csv". The reason is, that we haven't assigned the contents of the file to any object (a variable). We can create a new variable in R easily, using either **=** or **<-**
 
 ```{r}
-toyData = read.csv("toy.csv")
+gardenia = read.csv("./data_files/gardenia.csv")
 
-toyData
+gardenia
 ```
 There are a few restrictions on what variables can be called (for instance, they can't start with a number, they can't contain spaces). But it turns out, you probably want to make them informative, and easy to type.
 
@@ -119,28 +119,28 @@ dummyVector[3:6]
 
 **Exercise 5: access the 1st, 3rd, and 5th values in dummyVector (hint, you'll need to use a vector inside the square brackets). Add 10 to only those values.**
 
-The same operations work for dataframes. In this case we need to separate the column values from the row values, and we use a comma for this. Row values come before the comma, column values after. Remember **toyData**?  
+The same operations work for dataframes. In this case we need to separate the column values from the row values, and we use a comma for this. Row values come before the comma, column values after. Remember **gardenia**?  
 
 **A gardenia. From Little Shop of Horrors (1988)**
-![alt text](figures/gardenia.jpg)
+![alt text](./figures/gardenia.jpg)
 
 
 ```{r}
-toyData
-toyData[,]
-toyData[1,]
-toyData[,2]
-toyData[c(1:2), (2:3)]
+gardenia
+gardenia[,]
+gardenia[1,]
+gardenia[,2]
+gardenia[c(1:2), (2:3)]
 
 ```
 Another really good feature of data frames are the column (and row) names. We can access a whole column of data by referring to the column by its name.
 
 ```{r}
-toyData[,"leaf_number"]
+gardenia[,"leaf_number"]
 
 ```
 
-**Exercise 6: Some genius from NASA measured the height of our friends' gardenias in inches, not centimeters. Given that an inch is 2.54 cm, convert the "height" column to centimeters. Quick! Before the gardenias crash into Mars.**
+**Exercise 6: Some genius from Lockheed Martin measured the height of our friends' gardenias in inches, not centimeters. Given that an inch is 2.54 cm, convert the "height" column to centimeters. Quick! Before the gardenias crash into Mars and all is lost.**
 
   
 # Some real (fake) data.  
