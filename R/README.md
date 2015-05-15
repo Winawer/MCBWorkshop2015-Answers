@@ -19,3 +19,6 @@ There are also 2 subfolders.
         gardenia.jpg = a fully grown gardenia in bloom
              From Little Shop of Horrors (1988)
         snark.jpg = a fortuitously exact version of the snark I'd imagined. Apparently from a video game (Half Life) but sculpted by the talented Wispy Chipmunk of DeviantArt. http://wispychipmunk.deviantart.com/art/Mini-Snark-Sculpture-394639875     
+        zombigenic_beaver.jpg = a specimen of the temperate/nearctic zombigenic beaver. From the documentary nature film Zombeaver (2014), presumably *not* starring Sir David Attenborough.
+        
+        
