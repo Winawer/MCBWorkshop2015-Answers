@@ -28,11 +28,13 @@ This workshop is aimed at getting you up and running in R, with a focus on thing
     + conditionals
     + functions 
           
-# Don't do stuff on your desktop!
+
+# Don't work on your desktop!
+Organise your folders from the beginning, and this includes data and analysis files.  
+
 \newline  
-\newline  
+
 ![alt text](figures/desktop.jpg)
-<!---http://board.kafuka.org/thread.php?id=30&page=8-->
 \newline  
   
 The first thing you'll need to do is set the working directory. This is the address for the folder that contains your work. 
@@ -50,16 +52,18 @@ This follows the standard R format of a function name (in this case **getwd**), 
 When we want to change the working directory to another dedicated directory, we need to use the function **setwd** and include the new directory path:
 
 ```{r}
-setwd("/media/brad/Data/Documents/softwareCarp/MCBWorkshop2015") 
+setwd("/media/brad/Data/Documents/softwareCarp/MCBWorkshop2015/R") 
 ```
 
 **Exercise 2: Make this work on your computer**
 
-For all you Windows people out there, note the backslashes. Also, note that **strings** in R are defined by quotation marks.   
-  
-As in Unix, if we want to navigate up a level in the file hierarchy, we can use the command **setwd("..")**. If we want to move back down a level, we can truncate the current directory using a **.**: **setwd("./softwareCarp")**.  
+For all you Windows people out there, note the backslashes. 
 
-**Exercise 3: try this. List the contents of the subdirectory "./datafiles"**
+Also, note that **strings** in R are defined by quotation marks.   
+  
+As in Unix, if we want to navigate up a level in the file hierarchy, we can use the command **setwd("..")**. If we want to move back down a level, we can truncate the current directory using a **.**: **setwd("./softwareCarp")**.  Just like in the Unix command line, we can list the files in a directory using the function **list.files**. We can list all the directories in the current directory using **list.dirs**
+
+**Exercise 3: Try moving into different directories using the setwd() function. List the files in the subdirectory "./datafiles".**
 
 
 # Reading in data 
@@ -67,6 +71,7 @@ As in Unix, if we want to navigate up a level in the file hierarchy, we can use 
 To read data from a file  (the results of a gardenia-growing race, involving 3 friends), we use a function specific to the type of file: 
 ```{r}
 read.csv("./data_files/gardenia.csv")
+
 ```
 
 You notice that this doesn't do anything except print out the contents of the file "gardenia.csv". The reason is, that we haven't assigned the contents of the file to any object (a variable). We can create a new variable in R easily, using either **=** or **<-**
@@ -74,12 +79,11 @@ You notice that this doesn't do anything except print out the contents of the fi
 ```{r}
 gardenia = read.csv("./data_files/gardenia.csv")
 
-gardenia
+print(gardenia)
 ```
 There are a few restrictions on what variables can be called (for instance, they can't start with a number, they can't contain spaces). But it turns out, you probably want to make them informative, and easy to type.
 
 You can assign **string** values to a variable, or **integers**, or **floating** point numbers. You can use these variables the same way you use any other value.
-
 
 **Exercise 4: create a variable, and assign a number to it. Now double the value assigned to that variable**
 
@@ -88,16 +92,14 @@ You can also create variables that contain multiple values. If these are 1 dimen
 ```{r}
 dummyVector=c(4, 12, 1.3, 15, 0.1, 2.5, 7, 55)
 
-dummyVector
+print(dummyVector)
 ```
 
 You can perform many of the same operations on vectors that you can on single values
 
-**Exercise 4: add numbers to dummyVector. Subtract. Divide. What happens if you add a vector containing 2 numbers to dummyVector? or 3?**
+**Exercise 4: add numbers to dummyVector. Subtract. Divide. What happens if you add a vector containing 2 numbers to dummyVector? or 3? Finally, perform a mathematical operation on dummyVector to turn all values to 1**
 
-In vectors, all the variables need to be the same type.
-
-Whenever I mention a new function, you can check out the help and documentation for that function using a **?**, as in 
+**Note** Whenever I mention a new function, you can check out the help and documentation for that function using a **?**, as in 
 
 ```{r}
 ?read.csv
@@ -107,7 +109,7 @@ Sometimes the documentation is helpful, and sometimes it isn't.
 
 # Accessing data in vectors and dataframes
 
-We can access specific values from a vector just by referring to the position of the number, using square brackets
+We can access specific values from a vector just by referring to the position of the number, using square brackets (note, just )
 
 ```{r}
 dummyVector
@@ -117,11 +119,14 @@ dummyVector[3:6]
 
 ```
 
-**Exercise 5: access the 1st, 3rd, and 5th values in dummyVector (hint, you'll need to use a vector inside the square brackets). Add 10 to only those values.**
+**Exercise 5: access the 1st, 3rd, and 5th values in dummyVector (hint, you'll need to use a vector inside the square brackets). Add 10 to only those values. What happens if you change the first variable in dummyVector to "G"?**
 
-The same operations work for dataframes. In this case we need to separate the column values from the row values, and we use a comma for this. Row values come before the comma, column values after. Remember **gardenia**?  
 
-**A gardenia. From Little Shop of Horrors (1988)**
+Vectors are flexible, but there are a few restrictions. An important thing to remember about vectors is that all the variables need to be the same type.
+
+The same operations you can use on vectors work for dataframes. Because data frames are 2D, we need to separate the column values from the row values, and we use a comma for this. Row values come before the comma, column values after. Remember **gardenia**?  
+
+**A gardenia.**
 ![alt text](./figures/gardenia.jpg)
 
 
@@ -133,7 +138,8 @@ gardenia[,2]
 gardenia[c(1:2), (2:3)]
 
 ```
-Another really good feature of data frames are the column (and row) names. We can access a whole column of data by referring to the column by its name.
+
+Another really handy feature of data frames is indexing by column (and row) names. We can access a whole column of data by referring to the column by its name.
 
 ```{r}
 gardenia[,"leaf_number"]
@@ -142,15 +148,80 @@ gardenia[,"leaf_number"]
 
 **Exercise 6: Some genius from Lockheed Martin measured the height of our friends' gardenias in inches, not centimeters. Given that an inch is 2.54 cm, convert the "height" column to centimeters. Quick! Before the gardenias crash into Mars and all is lost.**
 
-  
-# Some real (fake) data.  
-The lab of Dr. Carol Lewis focuses on the effects of selection due to parasitism in the lesser snark, *Conniptus hemifittus* (Boojumnidae). In particular, the armored plate on the head (or cephalocalypse) apparently guards the brain of the lesser snark from the piercing ovipositor of the zombie-genic parasitoid beaver.  
+This is a really good time to point out that when you're performing operations on an object, you should assign the results to a different object. Otherwise you have to return to the start every time.
 
-Carol collected cephalocalpsis data from 2 lab reared populations (from Abu Dabi, and Juneau Alaska) before falling ill. Her intrepid post-doc, Ali Bellman returned from collecting the final population in Tierra del Fuego and finished the data collection.
+**Exercise 7: add the new height in centimeters column to the gardenia dataframe using column bind, or cbind(). Change the column names to reflect that one measure of height is in cm, the other in inches using colnames()**
+
+  
+# Some truthy data.  
+The lab of Dr. Carol Lewis focuses on the effects of selection due to parasitism in the lesser snark, *Conniptus hemifittus* (Boojumnidae). In particular, the armored plate on the head (or cephalocalypse) apparently guards the brain of the lesser snark from the piercing ovipositor of the zombigenic parasitoid beaver.  
+
+Carol collected cephalocalypsis data from 2 lab reared populations (from Abu Dabi, and Juneau Alaska) before falling ill with drug resistant nearctic malaria. She was unable to continue the project from the confines of her iron lung. Happily, a few weeks later her intrepid post-doc, Ali Bellman returned from collecting the final population in Tierra del Fuego and finished the data collection.  
 
 The data consists of 4 measurements: cephalocalypsis length, width and area, as well as a body size proxy - abdothorax length.  
 
-This much you piece together from the emails. But when you see the data they send you, you cry.  
+This much you piece together from the emails. But when you see the data they send you to analyse, you cry. Still, if *you* don't analyse the data, Dr Lewis and  Dr Bellman will be unable to apply for their next grant, and will probably wind up on the street.  
 
-**a snark. from http://wispychipmunk.deviantart.com/art/Mini-Snark-Sculpture-394639875**
+**a snark.**
 ![alt text](figures/snark.jpg)
+
+The first thing we're going to need to do is get this into a form that we can actually use. 
+
+This is really, really important.
+
+There's probably a way to do this exclusively in R, but it turns out that reading xls and xlsx into R is a real pain, and can go horribly wrong. We'll first make a csv file we can use.
+
+
+**Exercise 7: make a csv file we can actually use. Read it in, and call it snark.**
+
+Now we quality check. One of the first things to do is make sure all the data is formatted correctly. Try the **str()** function on your data.  
+
+Other functions that are useful for checking the properties of your data include length(), nrow(), and dim(); head() and tail().
+
+**Exercise 8: Use the options in read.csv to get rid of weird white space issues. Can you change the sex coding to something sensible using which()?**
+
+Sadly, some issues will still need to be resolved using ctrl-h in your text editor. Who does this kind of stuff?! Even grep() won't help. If Dr Lewis weren't in an iron lung, we'd be having some strong words.
+
+**Exercise 9: the Snarks need individual id numbers. Create an id column (hint, all you need is c() and a range), and add it to the dataset using cbind()**
+
+```{r}
+id=c(1:nrow(snark))
+snark=cbind(snark[,c(1, 2, 3)], id, snark[,c(4:length(snark))])
+```
+
+# Loops
+
+Another step in formatting data is giving the columns names we can use. Informative column headers, that aren't impossible to type. We've already used the colnames function, but there are a lot of columns of data in this dataset. Moreover, the columns are pretty repetitive. We can use a loop to generate the names automatically.
+
+The structure of loops (and nesting in general) in R is a prefix, followed by a pair of curly brackets. For loops take a condition with a nominal index variable, and continue until the index reaches a set point. Notice, you don't have to do anything to the index variable.
+
+```{r}
+for(i in 1:10){
+  print(i)
+}
+```
+
+**Exercise 10: Use a for-loop, and the c() and paste() functions, to come up with a set of column labels. Change the column names of the dataset**
+
+```{r}
+nameVec=c("pop", "sex", "family", "id")
+for(i in 1:5){
+  day=i*3-2
+  nameVec=c(nameVec, paste("l_", day, sep=""))
+  nameVec=c(nameVec, paste("w_", day, sep=""))
+  nameVec=c(nameVec, paste("a_", day, sep=""))
+  nameVec=c(nameVec, paste("bod_", day, sep=""))
+  print(nameVec)
+}
+names(snark)=nameVec
+
+}
+```
+
+
+# Data restructuring, plotting and summarizing. 
+
+
+
+**a zombigenic parasitoid beaver.**
+![alt text](figures/zombigenic_beaver.jpg)
