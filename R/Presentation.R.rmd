@@ -63,8 +63,7 @@ Also, note that **strings** in R are defined by quotation marks.
   
 As in Unix, if we want to navigate up a level in the file hierarchy, we can use the command **setwd("..")**. If we want to move back down a level, we can truncate the current directory using a **.**: **setwd("./softwareCarp")**.  Just like in the Unix command line, we can list the files in a directory using the function **list.files**. We can list all the directories in the current directory using **list.dirs**
 
-**Exercise 3: Try moving into different directories using the setwd() function. List the files in the subdirectory "./datafiles".**
-
+**Exercise 3: Try moving into different directories using the setwd() function. List the files in the subdirectory "./data_files".**
 
 # Reading in data 
 
@@ -81,30 +80,27 @@ gardenia = read.csv("./data_files/gardenia.csv")
 
 print(gardenia)
 ```
+
+**Note** Whenever I mention a new function, you can check out the help and documentation for that function using a **?**, as in **?read.csv** Sometimes the documentation is helpful, and sometimes it isn't. 
+
 There are a few restrictions on what variables can be called (for instance, they can't start with a number, they can't contain spaces). But it turns out, you probably want to make them informative, and easy to type.
 
 You can assign **string** values to a variable, or **integers**, or **floating** point numbers. You can use these variables the same way you use any other value.
 
-**Exercise 4: create a variable, and assign a number to it. Now double the value assigned to that variable**
+**Exercise 4: create a variable, and assign a number to it. Now double the value assigned to that variable using a multiplication operation on the variable**
 
 You can also create variables that contain multiple values. If these are 1 dimensional, we call them **vectors**. We create vectors using the combine function **c**
 
 ```{r}
-dummyVector=c(4, 12, 1.3, 15, 0.1, 2.5, 7, 55)
+dummyVector=c(4, 12, 1.3, 15, 0.1, 2.5, 7)
+dummyVector=c(dummyVector, 55)
 
 print(dummyVector)
 ```
 
 You can perform many of the same operations on vectors that you can on single values
 
-**Exercise 4: add numbers to dummyVector. Subtract. Divide. What happens if you add a vector containing 2 numbers to dummyVector? or 3? Finally, perform a mathematical operation on dummyVector to turn all values to 1**
-
-**Note** Whenever I mention a new function, you can check out the help and documentation for that function using a **?**, as in 
-
-```{r}
-?read.csv
-```
-Sometimes the documentation is helpful, and sometimes it isn't. 
+**Exercise 5: add numbers to dummyVector. Subtract. Divide. What happens if you add a vector containing 2 numbers to dummyVector? or 3? Finally, perform a mathematical operation on dummyVector to turn all values to 1**
   
 
 # Accessing data in vectors and dataframes
@@ -119,7 +115,7 @@ dummyVector[3:6]
 
 ```
 
-**Exercise 5: access the 1st, 3rd, and 5th values in dummyVector (hint, you'll need to use a vector inside the square brackets). Add 10 to only those values. What happens if you change the first variable in dummyVector to "G"?**
+**Exercise 6: access the 1st, 3rd, and 5th values in dummyVector (hint, you'll need to use a vector inside the square brackets). Add 10 to only those values. What happens if you change the first variable in dummyVector to "G"?**
 
 
 Vectors are flexible, but there are a few restrictions. An important thing to remember about vectors is that all the variables need to be the same type.
@@ -146,17 +142,17 @@ gardenia[,"leaf_number"]
 
 ```
 
-**Exercise 6: Some genius from Lockheed Martin measured the height of our friends' gardenias in inches, not centimeters. Given that an inch is 2.54 cm, convert the "height" column to centimeters. Quick! Before the gardenias crash into Mars and all is lost.**
+**Exercise 7: Some genius from Lockheed Martin measured the height of our friends' gardenias in inches, not centimeters. Given that an inch is 2.54 cm, convert the "height" column to centimeters. Quick! Before the gardenias crash into Mars and all is lost.**
 
-This is a really good time to point out that when you're performing operations on an object, you should assign the results to a different object. Otherwise you have to return to the start every time.
+This is a really good time to point out that when you're performing operations on an object, you should create a backup (say gardenia_bup). Otherwise you have to return to the start every time you screw up. And you *will* screw up.
 
 **Exercise 7: add the new height in centimeters column to the gardenia dataframe using column bind, or cbind(). Change the column names to reflect that one measure of height is in cm, the other in inches using colnames()**
 
-  
-# Some truthy data.  
-The lab of Dr. Carol Lewis focuses on the effects of selection due to parasitism in the lesser snark, *Conniptus hemifittus* (Boojumnidae). In particular, the armored plate on the head (or cephalocalypse) apparently guards the brain of the lesser snark from the piercing ovipositor of the zombigenic parasitoid beaver.  
 
-Carol collected cephalocalypsis data from 2 lab reared populations (from Abu Dabi, and Juneau Alaska) before falling ill with drug resistant nearctic malaria. She was unable to continue the project from the confines of her iron lung. Happily, a few weeks later her intrepid post-doc, Ali Bellman returned from collecting the final population in Tierra del Fuego and finished the data collection.  
+# Some truthy data.  
+The lab of Dr. Carol Lewis focuses on the effects of selection due to parasitism in the lesser snark, *Conniptus hemifittus*. In particular, the armored plate on the head (or cephalocalypse) apparently guards the brain of the lesser snark from the piercing ovipositor of the zombigenic parasitoid beaver.  
+
+Carol collected cephalocalypsis data from 2 lab reared populations (collected from Abu Dabi, and Juneau) before falling ill with drug resistant nearctic malaria. She was unable to continue the project from the confines of her iron lung. Happily, a few weeks later her intrepid post-doc, Ali Bellman, returned from collecting the final population in Tierra del Fuego, and finished the data collection.  
 
 The data consists of 4 measurements: cephalocalypsis length, width and area, as well as a body size proxy - abdothorax length.  
 
@@ -174,11 +170,14 @@ There's probably a way to do this exclusively in R, but it turns out that readin
 
 **Exercise 7: make a csv file we can actually use. Read it in, and call it snark.**
 
+
+
 Now we quality check. One of the first things to do is make sure all the data is formatted correctly. Try the **str()** function on your data.  
 
 Other functions that are useful for checking the properties of your data include length(), nrow(), and dim(); head() and tail().
 
-**Exercise 8: Use the options in read.csv to get rid of weird white space issues. Can you change the sex coding to something sensible using which()?**
+**Exercise 8: Use the options in read.csv to get rid of weird white space issues. Can you change the sex coding to something sensible using to.lower() and which()?**
+
 
 Sadly, some issues will still need to be resolved using ctrl-h in your text editor. Who does this kind of stuff?! Even grep() won't help. If Dr Lewis weren't in an iron lung, we'd be having some strong words.
 
