@@ -1,0 +1,14 @@
+---
+title: "capstoneGWAS"
+author: "Brad Arrrrr Foley"
+date: "05/15/2015"
+output: html_document
+---
+
+The kinds of data many of us increasingly have to deal with are characterised by lots of observations, disparate files, and multiple kinds of data. Sometimes this means we'll have to merge files by some kind of id. For instance, we might have a bunch of health data (say blood pressure and number of teeth) for a cohort; and simultanously want to match this up with another dataset (like their driving record).  
+
+For government and financial purposes, this index is typically the SSN. In science, indices are typically *ad hoc*, and can vary from lab to lab, and researcher to researcher. There's been some move to standardise accounting on big shared datasets, but it's still very much the Wild West when it comes to labelling.  
+
+Welcome to the Wild West.
+
+
