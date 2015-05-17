@@ -1,0 +1,31 @@
+---
+title: "capstoneGWAS"
+author: "Brad Arrrrr Foley"
+date: "05/15/2015"
+output: html_document
+---
+
+```{r}
+getwd()
+```
+
+
+# DON'T PANIC
+
+There are a large number of files to be manipulated here, and some technical sounding biology terms. But all we're doing is comparing one group of things with another group of things, and trying to see patterns. To some extent we can ignore the content of those groups (this is definitely not a general rule in research! Just for the sake of the workshop.) All we need to do in this capstone project is apply the same tools you've already used 
+
+# Goals and strategies  
+The kinds of analyses many of us have to deal with are increasingly characterised by lots of observations, disparate files, and multiple kinds of data.  
+
+**Reading in and concatenating** We can read in files, and concatenate small fragmented datasets by using a directory search, pattern recognition commands, and loops. Python is excellent for this.
+
+**Merging** If multiple kinds of data were collected by different people or instruments, we'll have to merge files by some kind of id. For instance, for a national cohort of fire fighters we might bunch of health data (say blood pressure and number of teeth); and want to match this up with another dataset (like their driving record). For government and financial purposes, this index is typically the SSN. 
+
+In science, indices are typically *ad hoc*, and can vary from lab to lab, and researcher to researcher. There's been some move to standardise accounting on big shared datasets, but it's still very much the Wild West when it comes to labelling.  
+
+Welcome to the Wild West.
+
+<!-- ![alt text](figures/www.jpg) -->
+\newline  
+
+**Visualizing and modelling** For a first-pass look at the patterns in the data, we only need to do some simple histograms, and linear models. This *can* be tricky, just because of the number of tests we need to run. But we can extract the essential information in just a few lines of code.  

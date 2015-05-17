@@ -138,6 +138,7 @@ gardenia[c(1:2), (2:3)]
 Another really handy feature of data frames is indexing by column (and row) names. We can access a whole column of data by referring to the column by its name.
 
 ```{r}
+colnames(gardenia)
 gardenia[,"leaf_number"]
 
 ```
@@ -146,7 +147,7 @@ gardenia[,"leaf_number"]
 
 This is a really good time to point out that when you're performing operations on an object, you should create a backup (say gardenia_bup). Otherwise you have to return to the start every time you screw up. And you *will* screw up.
 
-**Exercise 7: add the new height in centimeters column to the gardenia dataframe using column bind, or cbind(). Change the column names to reflect that one measure of height is in cm, the other in inches using colnames()**
+**Exercise 8: add the new height in centimeters column to the gardenia dataframe using column bind, or cbind(). Change the column names to reflect that one measure of height is in cm, the other in inches using colnames()**
 
 
 # Some truthy data.  
