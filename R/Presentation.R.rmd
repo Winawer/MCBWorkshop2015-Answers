@@ -182,12 +182,13 @@ Other functions that are useful for checking the properties of your data include
 
 Sadly, some issues will still need to be resolved using ctrl-h in your text editor. Who does this kind of stuff?! Even grep() won't help. If Dr Lewis weren't in an iron lung, we'd be having some strong words.
 
-**Exercise 9: the Snarks need individual id numbers. Create an id column (hint, all you need is c() and a range), and add it to the dataset using cbind()**
+**Exercise 9: the Snarks need individual id numbers. Create an id column (hint, all you need is c() and a range), and add it to the dataset using data.frame()**
 
 ```{r}
 id=c(1:nrow(snark))
-snark=cbind(snark[,c(1, 2, 3)], id, snark[,c(4:length(snark))])
+snark2=data.frame(snark[,c(1, 2, 3)], id, snark[,c(4:length(snark))])
 ```
+
 
 # Loops
 
@@ -205,6 +206,8 @@ for(i in 1:10){
 
 ```{r}
 nameVec=c("pop", "sex", "family", "id")
+
+
 for(i in 1:5){
   day=i*3-2
   nameVec=c(nameVec, paste("l_", day, sep=""))
@@ -213,13 +216,18 @@ for(i in 1:5){
   nameVec=c(nameVec, paste("bod_", day, sep=""))
   print(nameVec)
 }
-names(snark)=nameVec
+#names(snark)=nameVec
 
-}
 ```
 
 
-# Data restructuring, plotting and summarizing. 
+# Data summarizing and sorting. 
+
+Sadly, neither Dr Lewis nor Dr Bellman kept very good notes on the number of individuals they had for all the different treatments. Let's have a look at how many individuals we have for the various populations and families, and let's get a sense of what patterns we see.
+
+
+
+
 
 
 
