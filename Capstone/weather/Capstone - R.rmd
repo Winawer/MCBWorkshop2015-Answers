@@ -1,0 +1,93 @@
+---
+title: "Capstone - R"
+author: "Steven Hamblin"
+date: "May 17, 2015"
+output: html_document
+---
+
+In the Python section, you loaded over a hundred years of weather data, extracted important information from it, transformed it into a usable format, and now you will use it in an analysis.  
+
+This mimics a not-uncommon workflow in scientific computing, where a scripting language such as Python (or Ruby, or Perl, or Bash scripting, or any language you like) is used to proprocess large data sets^[These days, very large data sets are often processed using parallel processing and specialized platforms such as Hadoop.  These tools are part of the future for very large data, but their use is beyond the scope of this workshop.] and R is used to do stats or visualization.  This workflow is enhanced by tools such as Jupyter and R Markdown, giving scientists the ability to document and replicate their work more easily.  
+
+We will start by loading the dataset we created in the last section and doing some exploratory analysis on it.  
+
+---
+
+#### Task
+
+Start by loading the csv file you created in the Python section into a data frame called ```tempdat```.  This should give you a data frame of 114 observations with 6 variables.  
+
+---
+
+We will make one addition to the dataset, which is a computed date variable. The date components in the dataframe (year, month, day) are not in a format that R recognises as a date, so we will start by fixing that.
+
+---
+
+#### Task
+
+Add a column to ```tempdat``` called ```date```.  You should start by looking up ?as.Date, and ?paste.
+
+---
+
+Let's begin an exploratory data analysis. This is a simple dataset, but it will illustrate many of the workflows you might use.  
+
+---
+
+#### Task
+
+Start with a basic numerical summary, ```summary```.  Take a careful look at the variables.  Do their ranges make sense?  
+
+---
+
+We will follow up the numerical summary with an exploratory graphical analysis.  
+
+--- 
+
+#### Task
+
+Plot histograms of the temperature, latitude, longitude, and month variables. Do they make sense?
+
+---
+
+You've probably noticed by now that there are some odd features to this data.  At this point, your goal is to determine what the error might be. Use your knowledge of Python and R to track down where the error comes from in the data.  Is it specific to a particular time  or place?  *It is important to note that entries of all 9s indicate missing data / observations.*
+
+Having identified the problem, we will need to go back and fix it.  However, before we do that, let's take a look at more interesting plot.  This plot leverages some of R's more advanced plotting procedures and libraries, such as ```ggplot```.  The details of this plotting command would take more space than we have here to explain, but googling the components of the command and exploring the help files associated with ```ggplot``` may prove enlightning.
+
+*Note that the plotting code uses the pre-made temperature file stored in ```data/min_temp_readings.csv```.  When making your own plots, change the code to point to your processed data file.*
+
+```{r,message=FALSE}
+
+library(ggplot2)
+library(maps)
+library(maptools)
+
+tempdat = read.csv("data/min_temp_readings.csv")
+
+data(wrld_simpl)
+bm = ggplot() + 
+  geom_polygon(data=wrld_simpl, 
+               aes(x=long, y=lat, group=group), fill='grey65') + 
+  coord_cartesian(xlim=c(-180,180), ylim=c(-90,90)) + 
+  scale_x_continuous(breaks=seq(-180,180,20)) + 
+  scale_y_continuous(breaks=seq(-90,90,10)) +
+  theme_bw() +
+  theme(legend.position=c(0.05,0.5), panel.grid.minor=element_blank(),panel.grid.major=element_blank(),axis.text=element_blank(),
+        axis.ticks=element_blank(),axis.title=element_blank(),legend.text=element_text(size=12),legend.title=element_text(size=16)) +
+  geom_point(size=5, aes(longitude, latitude, color=year),data=tempdat) +
+  scale_colour_gradient(name="Year",low="red",high="blue")
+print(bm)
+```
+
+Examination of the plot should highlight the errors in the data.  It seems quite unlikely that the minimum temperature recorded for a given year would be anywhere near the equator.  However, the plot should also make the problem quite clear if you haven't already determined what caused the issue in the data.
+
+---
+
+#### Task
+
+When you reach this point, ask one of the instructors for the link to download the corrected data.  When you have it, re-run the analysis with the corrected data.  
+
+Once you've done that, return to the Python section.  Write a new function, ```yearly_maximum``` that calculates the yearly maximum temperature and re-run the analsis.
+
+---
+
+
