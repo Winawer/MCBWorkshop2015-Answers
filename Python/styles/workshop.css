@@ -63,7 +63,10 @@
         }  
 
 
-
+    .text_cell_render code {
+        color: red;
+        font-family: "Source Code Pro", source-code-pro,Consolas, monospace;
+    }
 
     
 </style>
