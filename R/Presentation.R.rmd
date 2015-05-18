@@ -94,13 +94,14 @@ You can also create variables that contain multiple values. If these are 1 dimen
 ```{r}
 dummyVector=c(4, 12, 1.3, 15, 0.1, 2.5, 7)
 dummyVector=c(dummyVector, 55)
-
+rangeVector=c(1:6)
 print(dummyVector)
+print(rangeVector)
 ```
 
 You can perform many of the same operations on vectors that you can on single values
 
-**Exercise 5: add numbers to dummyVector. Subtract. Divide. What happens if you add a vector containing 2 numbers to dummyVector? or 3? Finally, perform a mathematical operation on dummyVector to turn all values to 1**
+**Exercise 5: add numbers to dummyVector. Subtract. Divide. What happens if you add a dummyVector and rangeVector? If you add a vector containing 2 numbers to dummyVector? or 3? Finally, perform a mathematical operation on dummyVector to turn all values to 1**
   
 
 # Accessing data in vectors and dataframes
@@ -153,7 +154,7 @@ This is a really good time to point out that when you're performing operations o
 # Some truthy data.  
 The lab of Dr. Carol Lewis focuses on the effects of selection due to parasitism in the lesser snark, *Conniptus hemifittus*. In particular, the armored plate on the head (or cephalocalypse) apparently guards the brain of the lesser snark from the piercing ovipositor of the zombigenic parasitoid beaver.  
 
-Carol collected cephalocalypsis data from 2 lab reared populations (collected from Abu Dabi, and Juneau) before falling ill with drug resistant nearctic malaria. She was unable to continue the project from the confines of her iron lung. Happily, a few weeks later her intrepid post-doc, Ali Bellman, returned from collecting the final population in Tierra del Fuego, and finished the data collection.  
+Carol gathered cephalocalypsis data from 2 lab reared populations (collected from Abu Dabi, and Juneau) before falling ill with drug resistant nearctic malaria. She was unable to continue the project from the confines of her iron lung. Happily, a few weeks later her intrepid post-doc, Ali Bellman, returned from collecting the final population in Tierra del Fuego, and finished the data collection.  
 
 The data consists of 4 measurements: cephalocalypsis length, width and area, as well as a body size proxy - abdothorax length.  
 
@@ -169,30 +170,22 @@ This is really, really important.
 There's probably a way to do this exclusively in R, but it turns out that reading xls and xlsx into R is a real pain, and can go horribly wrong. We'll first make a csv file we can use.
 
 
-**Exercise 7: make a csv file we can actually use. Read it in, and call it snark.**
+**Exercise 9: make a csv file we can actually use. Read it in, and call it snark.**
 
 
-
-Now we quality check. One of the first things to do is make sure all the data is formatted correctly. Try the **str()** function on your data.  
+Now we quality check. **This is really important!** One of the first things to do is make sure all the data is formatted correctly. Try the **str** function on your data.
 
 Other functions that are useful for checking the properties of your data include length(), nrow(), and dim(); head() and tail().
 
-**Exercise 8: Use the options in read.csv to get rid of weird white space issues. Can you change the sex coding to something sensible using to.lower() and which()?**
+**Exercise 10: Use the options in read.csv to get rid of weird white space issues. Can you change the sex coding to something sensible using tolower() and which()?**
 
 
 Sadly, some issues will still need to be resolved using ctrl-h in your text editor. Who does this kind of stuff?! Even grep() won't help. If Dr Lewis weren't in an iron lung, we'd be having some strong words.
 
-**Exercise 9: the Snarks need individual id numbers. Create an id column (hint, all you need is c() and a range), and add it to the dataset using data.frame()**
-
-```{r}
-id=c(1:nrow(snark))
-snark2=data.frame(snark[,c(1, 2, 3)], id, snark[,c(4:length(snark))])
-```
-
+**Exercise 11: the Snarks need individual id numbers. Create an id column (hint, all you need is the combine function c(), and a range). Add it to the dataset using data.frame()**
 
 # Loops
 
-Another step in formatting data is giving the columns names we can use. Informative column headers, that aren't impossible to type. We've already used the colnames function, but there are a lot of columns of data in this dataset. Moreover, the columns are pretty repetitive. We can use a loop to generate the names automatically.
 
 The structure of loops (and nesting in general) in R is a prefix, followed by a pair of curly brackets. For loops take a condition with a nominal index variable, and continue until the index reaches a set point. Notice, you don't have to do anything to the index variable.
 
@@ -202,34 +195,140 @@ for(i in 1:10){
 }
 ```
 
-**Exercise 10: Use a for-loop, and the c() and paste() functions, to come up with a set of column labels. Change the column names of the dataset**
+```{r}
+Sentence="Hello, I'm on loop number"
+for(i in 1:20){
+  output=paste(Sentence, i)
+  print(output)
+  }
+```
+
+Another step in formatting data is giving the columns names we can use. Informative column headers, that aren't impossible to type. We've already used the colnames function, but there are a lot of columns of data in this dataset. Moreover, the columns are pretty repetitive. We can use a loop to generate the names automatically.
+
+
+**Exercise 12: Use a for-loop, and the c() and paste() functions, to come up with a set of column labels. Change the column names of the dataset**
+We'll break this into parts. First, we want a vector that contains the first 3 names column names (pop, sex, and family)
+
+Then, within the loop, for each one of the 5 days, we'll generate a name for the length, the width, the area, and the body. For instance, the day 1 length column might be named paste("length_", 1, sep="")
+Once these are generated, we'll attach them together into the names vector using c().
+
+Finally, we'll rename the columns using col.names()
+
+# Data summarizing. 
+
+R has a bunch of built in functions to summarise data, like max, min, mean and sd (standard deviation). We can apply these to columns (R is a little picky about how you apply functions to rows). So we can find out, for instance, what the size of the largest snark on day 13 is using 
 
 ```{r}
-nameVec=c("pop", "sex", "family", "id")
+snark=read.csv("data_files/snark.csv", as.is=T)
+max(snark[,"bod_13"])
 
+```
 
-for(i in 1:5){
-  day=i*3-2
-  nameVec=c(nameVec, paste("l_", day, sep=""))
-  nameVec=c(nameVec, paste("w_", day, sep=""))
-  nameVec=c(nameVec, paste("a_", day, sep=""))
-  nameVec=c(nameVec, paste("bod_", day, sep=""))
-  print(nameVec)
+Whoops!
+```{r}
+max(snark[,"bod_13"], na.rm=T)
+
+```
+
+**Exercise 13: Use a for-loop to make max, min and mean summaries of each of the columns. Store it as a dataframe, with the columns corresponding to the columns of snark.**  
+
+Hint, the for loop will look something like this:
+summary=c()
+for(i in 5:length(snark)){
+  ??????
+  ??????
 }
-#names(snark)=nameVec
+
+You can visualise the summaries using plotting functions like hist  
+```{r}
+hist(snark[,"bod_13"])
+
+hist(log(snark[,"bod_13"]))
 
 ```
 
 
-# Data summarizing and sorting. 
+But of course, what we really want is to extract patterns. For instance differences by sex, or population. For this, we can use other plotting packages like boxplot. For, we use a common expression for formulas in R, where the dependent variable is on the left, and any number of predictors are on the left.
 
-Sadly, neither Dr Lewis nor Dr Bellman kept very good notes on the number of individuals they had for all the different treatments. Let's have a look at how many individuals we have for the various populations and families, and let's get a sense of what patterns we see.
+```{r}
+boxplot(snark[,"l_1"]~snark[,"pop"]+snark[,"family"])
+boxplot(l_1~pop + family, data=snark)
 
+```
 
+Whoops - probably too many categories. Try something more sensible.  
 
-
-
+**Exercise 14: do a boxplot of day 13 body size and cephalocalypsis area grouped by sex and  population. Try to plot the ratio of body size and cephalocalypsis area by sex and population. Which population do you think is most plagued by zombigenic parasitoid beavers?**  
 
 
 **a zombigenic parasitoid beaver.**
 ![alt text](figures/zombigenic_beaver.jpg)
+
+Before we go any further, it's critical that we get the data into the right *shape*. By this we mean one row, one observation. Almost any analysis we do (for instance, regression across time) will require this format. While Drs Lewis and Bellman entered the data by individual, we need to reshape the data for such that each day is a row (so-called long format).
+
+To do that, we use a handy function called reshape. We can specify our 
+
+* *data* (snark)
+* the portion of data that's varying c(5:length(snark))
+* the *direction* ("long") the variables we're grouping by
+* *idvar* (id) 
+* *timevar* a (string) name for the column that corresponds with the time variable (say, "day")
+* importantly, *sep* value, so that reshape can parse the column names 
+
+
+**Exercise 15: reshape the data, call it snarkLong**  
+
+
+If we want to do hypothesis testing, one of the most basic tools we have is linear regression. It turns out, this is really easy to do in R. You use the same syntax as with the boxplot, but the function is called **lm**. Linear modelling is able to handle  both categorical and quantitative data.
+
+```{r}
+snarkLong=read.csv("./data_files/snarkLong.csv", sep=",", header=T, as.is=T)
+head(snarkLong)
+sexSize=lm(bod~sex, data=snarkLong[which(snarkLong[,"day"]==13),])
+summary(sexSize)
+```
+
+```{r}
+cephGrow=lm(a~day, data=snarkLong)
+summary(cephGrow)
+plot(a~day, data=snarkLong)
+abline(cephGrow)
+```
+
+
+**Exercise 16: write linear models to test whether there is variation in growth rate of body and cephalocalypse by sex, population and family**
+
+
+# Doing more than one thing at a time 
+
+So far, we've only been looking at one or two variables at a time. If we wanted to lots of tests, or lots of summaries on the data, we could use for loops. It turns out that for loops in R can be very slow. But happily there is a powerful, flexible tool in R for applying a number of arbitrary functions across an arbitrary number of grouping variables. The package is called plyr, and the function is ddply.
+
+For instance, if we want to get our mean, max, and min summaries for the sexes separately using ddply:
+
+```{r}
+library(plyr)
+sexSum=ddply(snarkLong, .(sex, day), summarise, 
+             N= length(bod),
+             aMean=mean(a, na.rm=T),
+             aRat=mean(a, na.rm=T)/mean(bod, na.rm=T))
+
+sexSum
+```
+**Exercise 17: summarise n, mean, min, max, sd, area, and cephalocalypse:body ratio by sex, population and day**
+
+#The full flexibility of doing more than one thing at a time requires you to write your own functions...  
+
+So far, we've talked about, and used a lot of functions, but haven't looked at them carefully. We haven't needed to, because R has so many useful built in functions, and libraries of other functions we can download and use. But even with all of this, we're quickly going to find we need something that someone else hasn't written. And for that, we need to write our own.  
+
+Fortunately, this isn't too hard. We just need to keep track of what we're putting into the function, and what we're taking out. And what we're leaving behind.
+
+* putting in: ALL the things, and ONLY the things you're going to use in the function
+* taking out: a single result.
+* functions are like vegas: whatever happens in a function, stays in a function. Nothing outside the function changes, except what you pass out.
+
+
+
+
+
+
+
