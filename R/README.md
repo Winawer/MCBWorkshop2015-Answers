@@ -5,7 +5,7 @@ The R module has a root folder containing the presentation, readable html, and s
         (plain text. This will open in RStudio once we install rmarkdown)
         
 There are also 2 subfolders.
-    ./data_files contains the 2 example data sets we're going to use.
+    ./raw_data contains the 2 example data sets we're going to use.
          gardenia: 
             gardenia.csv = the gardenia dataset 
             gardenia.txt = the readme for the gardenia project       

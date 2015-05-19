@@ -6,7 +6,17 @@ output: html_document
 fig.caption: yes
 ---
 
-This workshop is aimed at getting you up and running in R, with a focus on things that are likely to be important for anyone working with large-ish data sets. 
+# Doing specific things on specific bits of data
+
+So far, we've covered basic directory and file operations in Unix. Things like moving around the file structure (cd); copying, deleting and moving files (cp, rm, mv); showing particular files (ls), and peeking into files (cat, head).  
+
+In git, we discussed version control - this entails being very careful about the files you include, and being able to trace your steps.  
+
+In Python, we spent a lot of time with manipulating data. Accesing particular bits of data, and manipulating them; as well as performing operations in loops.  
+
+Today, we're going to build on these themes. R uses a lot of the same basic concepts, and even a lot of the same commands. Pretty much you can do all the same things - you'll **need** to do all these same things - in R as you can in Unix or Python. Just like in git, when you do things in R you're going to need to retrace your steps, and share your code with other people. 
+
+What R specialises in, though, is statistics and data analysis. So we're going to focus on basic operations that will get you to your data, and help you get results out of your data.  
 
 # Topics: 
 * Figuring out where you are, working directories, and file navigation
@@ -27,10 +37,14 @@ This workshop is aimed at getting you up and running in R, with a focus on thing
     + for loops
     + conditionals
     + functions 
-          
+
 
 # Don't work on your desktop!
-Organise your folders from the beginning, and this includes data and analysis files.  
+First. Organise your folders from the beginning, and this includes data and analysis files. It's a **really** good idea to have a single folder for each analysis. Data files should be .csv (with good column names). 
+
+Second. Make an intelligible readme. Explain the data, and explain every column.
+
+Third. Make a good record of your analysis. The iPython notebooks were great. Today we'll make a simple text-based .r file. There are a couple of things to remember in the r file: keep it clean, and comment it liberally. Save it together with your data. Use the # symbol to structure your code, and block out comments from being processed.
 
 \newline  
 
@@ -39,7 +53,7 @@ Organise your folders from the beginning, and this includes data and analysis fi
   
 The first thing you'll need to do is set the working directory. This is the address for the folder that contains your work. 
 
-To figure out where the current working directory is, you can use the function 
+To figure out where the current working directory is, you can use the following function (similar to pwd)
 
 ```{r}
 getwd()
@@ -49,7 +63,7 @@ getwd()
 
 This follows the standard R format of a function name (in this case **getwd**), followed by brackets. The brackets contain any information you need to pass to the function in order for it to work.  
 
-When we want to change the working directory to another dedicated directory, we need to use the function **setwd** and include the new directory path:
+When we want to change the working directory to another dedicated directory, we need to use the function **setwd** (similar to cd) and include the new directory path:
 
 ```{r}
 setwd("/media/brad/Data/Documents/softwareCarp/MCBWorkshop2015/R") 
@@ -61,41 +75,75 @@ For all you Windows people out there, note the backslashes.
 
 Also, note that **strings** in R are defined by quotation marks.   
   
-As in Unix, if we want to navigate up a level in the file hierarchy, we can use the command **setwd("..")**. If we want to move back down a level, we can truncate the current directory using a **.**: **setwd("./softwareCarp")**.  Just like in the Unix command line, we can list the files in a directory using the function **list.files**. We can list all the directories in the current directory using **list.dirs**
+As in Unix, if we want to navigate up a level in the file hierarchy, we can use the command **setwd("..")**.  Just like in the Unix command line, we can list the files in a directory using the function **list.files**. We can list all the directories in the current directory using **list.dirs**
 
-**Exercise 3: Try moving into different directories using the setwd() function. List the files in the subdirectory "./data_files".**
+**Exercise 3: Try moving into different directories using the setwd() function. Make sure you know where you are using getwd(). End up in the ./R directory. List the files in the subdirectory "./data_files".**
 
 # Reading in data 
 
-To read data from a file  (the results of a gardenia-growing race, involving 3 friends), we use a function specific to the type of file: 
+To read data from a file  (the results of a gardenia-growing race, involving 3 friends), we use a function specific to the type of file. There is a general file-type reading function **read.table** and a bunch of specific ones for common file types. Check out the help menu:
 ```{r}
-read.csv("./data_files/gardenia.csv")
+?read.table
 
 ```
 
-You notice that this doesn't do anything except print out the contents of the file "gardenia.csv". The reason is, that we haven't assigned the contents of the file to any object (a variable). We can create a new variable in R easily, using either **=** or **<-**
+Notice there aren't any functions for .xlsx.
 
-```{r}
-gardenia = read.csv("./data_files/gardenia.csv")
+Try to read in the data:
+
+```{r, error=T}
+
+read.csv("./raw_data/gardenia.csv")
 
 print(gardenia)
 ```
 
-**Note** Whenever I mention a new function, you can check out the help and documentation for that function using a **?**, as in **?read.csv** Sometimes the documentation is helpful, and sometimes it isn't. 
+You notice that this doesn't do anything except print out the contents of the file "gardenia.csv". The reason is, that we haven't assigned the contents of the file to any object (a **variable**). We can create a new variable in R easily, using either **=** or **<-**
 
-There are a few restrictions on what variables can be called (for instance, they can't start with a number, they can't contain spaces). But it turns out, you probably want to make them informative, and easy to type.
+```{r}
+gardenia = read.csv("./raw_data/gardenia.csv")
+
+print(gardenia)
+```
+
+There are a few restrictions on what variables can be called (for instance, they can't start with a number, they can't contain spaces). But you probably want to make variable names informative, and easy to type.
 
 You can assign **string** values to a variable, or **integers**, or **floating** point numbers. You can use these variables the same way you use any other value.
 
-**Exercise 4: create a variable, and assign a number to it. Now double the value assigned to that variable using a multiplication operation on the variable**
+```{r, error=TRUE}
+A=5
+B=A
+#The value of B is
+b
+#Whoops!
+B
+#The value of A is
+A
+A=A*2
+#A has changed
+A
+B
+```
+We can see a few of these variable types using the str(), or structure function. This function is a really important one we'll return to later. You should use it whenever you read in a new dataset.
+
+```{r}
+str(gardenia)
+```
+
+
+**Exercise 4: create a variable, and assign a number to it. Now square the value assigned to that variable using a multiplication operation on the variable**
 
 You can also create variables that contain multiple values. If these are 1 dimensional, we call them **vectors**. We create vectors using the combine function **c**
 
 ```{r}
+#create
 dummyVector=c(4, 12, 1.3, 15, 0.1, 2.5, 7)
-dummyVector=c(dummyVector, 55)
-rangeVector=c(1:6)
 print(dummyVector)
+#add to
+dummyVector=c(dummyVector, 55)
+print(dummyVector)
+#create, using a range operator
+rangeVector=c(1:6)
 print(rangeVector)
 ```
 
@@ -106,12 +154,14 @@ You can perform many of the same operations on vectors that you can on single va
 
 # Accessing data in vectors and dataframes
 
-We can access specific values from a vector just by referring to the position of the number, using square brackets (note, just )
+Remember from Python, square and round brackets have a different meaning. Like Python, we can access specific values from a vector just by referring to the position of the number, using square brackets. Pay close attention to the differences in indexing between Python and R!
 
 ```{r}
 dummyVector
 dummyVector[]
+#see the difference below?
 dummyVector[3]
+#you can access indices using ranges!
 dummyVector[3:6]
 
 ```
@@ -130,35 +180,60 @@ The same operations you can use on vectors work for dataframes. Because data fra
 ```{r}
 gardenia
 gardenia[,]
+#look at a single row
 gardenia[1,]
+#look at a single column
 gardenia[,2]
+#look at a couple columns
+gardenia[,c(1,5)]
+#access specific chunks
 gardenia[c(1:2), (2:3)]
 
 ```
 
-Another really handy feature of data frames is indexing by column (and row) names. We can access a whole column of data by referring to the column by its name.
+Pay close attention to the way we can access particular subsets of data using vectors. This is a feature we're going to use again and again. Another really handy feature of data frames is indexing by column names, and vectors of column names. We can access a whole column of data by referring to the column by its name.
 
 ```{r}
+#notice that the column names are just another vector
 colnames(gardenia)
 gardenia[,"leaf_number"]
-
+gardenia[,c("name", "leaf_number")]
 ```
 
-**Exercise 7: Some genius from Lockheed Martin measured the height of our friends' gardenias in inches, not centimeters. Given that an inch is 2.54 cm, convert the "height" column to centimeters. Quick! Before the gardenias crash into Mars and all is lost.**
+**Exercise 7: Some genius from Lockheed Martin measured the height of our friends' gardenias in inches, not centimeters. Given that an inch is 2.54 cm, make a new vector called "h_cm", in which you convert the "height" column to centimeters. Quick! Before the gardenias crash into Mars and all is lost.**
 
-This is a really good time to point out that when you're performing operations on an object, you should create a backup (say gardenia_bup). Otherwise you have to return to the start every time you screw up. And you *will* screw up.
+Before the next step, it is a really good time to point out that when you're performing operations on an object, you should first create a backup (say gardenia_bup). Otherwise you have to return to the start every time you screw up. And you *will* screw up.
 
-**Exercise 8: add the new height in centimeters column to the gardenia dataframe using column bind, or cbind(). Change the column names to reflect that one measure of height is in cm, the other in inches using colnames()**
+**Exercise 8: add the new height in centimeters column to the gardenia dataframe using column bind, or cbind(). Change the column name for "height" to reflect that one measure of height is in cm, the other in inches using colnames()**
+
+A lot of powerful R functions take advantage of the access-by-vector methodology. For instance **order**.
+```{r}
+gardenia[,"leaf_number"] 
+order(gardenia[,"leaf_number"])
+```
+
+**Exercise 9: Find the order of values in the gardenia "height" column. Use this resulting vector to sort the table. Print the rows containing just the 3 tallest plants**  
+
+
+Another function we can use in a similar way, is **which**. which() brings up an important kind of operation, the logical comparison. We use logical operators frequently, to subset data.
+
+```{r, error=TRUE}
+which(gardenia[,"height"] > 10)
+gardenia[,"height"] < 12
+gardenia[,"name"] == "charles"
+```
+**Exercise 10: Print the rows containing just the people from USC**  
 
 
 # Some truthy data.  
+
+We're now going to try out some of these fancy new tools on a much bigger dataset.
+
 The lab of Dr. Carol Lewis focuses on the effects of selection due to parasitism in the lesser snark, *Conniptus hemifittus*. In particular, the armored plate on the head (or cephalocalypse) apparently guards the brain of the lesser snark from the piercing ovipositor of the zombigenic parasitoid beaver.  
 
 Carol gathered cephalocalypsis data from 2 lab reared populations (collected from Abu Dabi, and Juneau) before falling ill with drug resistant nearctic malaria. She was unable to continue the project from the confines of her iron lung. Happily, a few weeks later her intrepid post-doc, Ali Bellman, returned from collecting the final population in Tierra del Fuego, and finished the data collection.  
 
 The data consists of 4 measurements: cephalocalypsis length, width and area, as well as a body size proxy - abdothorax length.  
-
-This much you piece together from the emails. But when you see the data they send you to analyse, you cry. Still, if *you* don't analyse the data, Dr Lewis and  Dr Bellman will be unable to apply for their next grant, and will probably wind up on the street.  
 
 **a snark.**
 ![alt text](figures/snark.jpg)
@@ -169,20 +244,59 @@ This is really, really important.
 
 There's probably a way to do this exclusively in R, but it turns out that reading xls and xlsx into R is a real pain, and can go horribly wrong. We'll first make a csv file we can use.
 
+```{r, echo=F, }
+snark1=read.csv("./raw_data/lewis_snark.csv")
+snark2=read.csv("./raw_data/bellman_snark.csv")
+snark=rbind(snark1, snark2)
+```
 
-**Exercise 9: make a csv file we can actually use. Read it in, and call it snark.**
+**Exercise 11: Read in both files of snark data. Stick them together using rbind and call the resulting dataset "snark". Save it as snark.csv, in the data_file folder.**
 
 
-Now we quality check. **This is really important!** One of the first things to do is make sure all the data is formatted correctly. Try the **str** function on your data.
+Now we quality check. **This is really important!** The first thing we do is make sure all the data is formatted correctly. Try the **str** function on your data. What's going on with sex?
+
+```{r}
+unique(snark[,"sex"])
+```
+
 
 Other functions that are useful for checking the properties of your data include length(), nrow(), and dim(); head() and tail().
 
-**Exercise 10: Use the options in read.csv to get rid of weird white space issues. Can you change the sex coding to something sensible using tolower() and which()?**
+**Exercise 12: Can you change the sex coding to something sensible using which()? Save the new datafile.**
+
+```{r, echo=F, }
+snark[which(snark[,"sex"]=="F"),2]=0
+snark[which(snark[,"sex"]=="f"),2]=0
+snark[which(snark[,"sex"]=="female"),2]=0
+snark[which(snark[,"sex"]=="M"),2]=1
+snark[which(snark[,"sex"]=="m"),2]=1
+snark[which(snark[,"sex"]=="male"),2]=1  
+write.csv(snark, "./data_files/snark.csv", row.names=F)
+```
+```{r}
+str(snark)
+```
 
 
-Sadly, some issues will still need to be resolved using ctrl-h in your text editor. Who does this kind of stuff?! Even grep() won't help. If Dr Lewis weren't in an iron lung, we'd be having some strong words.
 
-**Exercise 11: the Snarks need individual id numbers. Create an id column (hint, all you need is the combine function c(), and a range). Add it to the dataset using data.frame()**
+And now we'll have an actual look at the data using a couple of kinds of plots. These sorts of visualisations are really helpful in picking up gross errors. 
+
+```{r}
+hist(snark[,"l_1"])
+#somthing is weird.
+boxplot(snark[,"l_1"]~snark[,"sex"]+snark[,"pop"])
+
+```
+
+**Exercise 12: Let's check for outliers using boxplot, and delete them. We can use logical operators for this.**
+```{r, echo=F, }
+boxplot(snark[,"l_7"]~snark[,"sex"]+snark[,"pop"])
+snark=snark[which(snark[,"l_7"]<800),]
+boxplot(snark[,"l_7"]~snark[,"sex"]+snark[,"pop"])
+
+```
+
+**Exercise 11: the Snarks need individual id numbers. Create an id column (hint, all you need is the combine function c(), and a range). Add it to the dataset using cbind()**
 
 # Loops
 
@@ -219,7 +333,7 @@ Finally, we'll rename the columns using col.names()
 R has a bunch of built in functions to summarise data, like max, min, mean and sd (standard deviation). We can apply these to columns (R is a little picky about how you apply functions to rows). So we can find out, for instance, what the size of the largest snark on day 13 is using 
 
 ```{r}
-snark=read.csv("data_files/snark.csv", as.is=T)
+snark=read.csv("raw_data/snark.csv", as.is=T)
 max(snark[,"bod_13"])
 
 ```
@@ -282,7 +396,7 @@ To do that, we use a handy function called reshape. We can specify our
 If we want to do hypothesis testing, one of the most basic tools we have is linear regression. It turns out, this is really easy to do in R. You use the same syntax as with the boxplot, but the function is called **lm**. Linear modelling is able to handle  both categorical and quantitative data.
 
 ```{r}
-snarkLong=read.csv("./data_files/snarkLong.csv", sep=",", header=T, as.is=T)
+snarkLong=read.csv("./raw_data/snarkLong.csv", sep=",", header=T, as.is=T)
 head(snarkLong)
 sexSize=lm(bod~sex, data=snarkLong[which(snarkLong[,"day"]==13),])
 summary(sexSize)
