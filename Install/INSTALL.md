@@ -51,14 +51,15 @@ The major choices for installing Python are to use a self-contained distribution
 
 ![Installation flowchart](images/install-flowchart.png)
 
-For the Python section, novices to Python development should use the Anaconda Python distribution, which is free and can be downloaded [here](https://store.continuum.io/cshop/anaconda/).  Anaconda Python is cross-platform (Windows, Linux, OS X), and has the advantage of coming with many important Python libraries (such as numpy, scipy, scikit-*, ipython, matplotlib, etc.) preinstalled.  
+For the Python section, novices to Python development should use the Anaconda Python **2.7** distribution, which is free and can be downloaded [here](https://store.continuum.io/cshop/anaconda/).  Anaconda Python is cross-platform (Windows, Linux, OS X), and has the advantage of coming with many important Python libraries (such as numpy, scipy, scikit-*, ipython, matplotlib, etc.) preinstalled.  
 
 Once you have installed Anaconda, please read the [Anaconda quickstart guide](https://store.continuum.io/static/img/Anaconda-Quickstart.pdf) and make sure that your installation works.
 
 If you do not wish to use Anaconda, please make sure to have the following libraries installed;  you can use [*pip*](https://pip.pypa.io/en/latest/installing.html) to install most of these:
 
 * numpy
-* ipython
+* ipython **3.0 or higher**
+* for the ipython notebook, make sure you have *mistune*, *tornado*, *pyzmq* and *jsonschema* libraries installed (use pip).
 
 We will also be making significant use of the iPython notebook.  If you installed Anaconda, this should be accessible from the Anaconda Launcher (see the [quickstart guide](https://store.continuum.io/static/img/Anaconda-Quickstart.pdf)).  If you are not using Anaconda or are using Anaconda on Linux, be sure that you can start the notebook interface by going to the command line:
 
