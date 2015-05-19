@@ -238,11 +238,6 @@ The data consists of 4 measurements: cephalocalypsis length, width and area, as 
 **a snark.**
 ![alt text](figures/snark.jpg)
 
-The first thing we're going to need to do is get this into a form that we can actually use. 
-
-This is really, really important.
-
-There's probably a way to do this exclusively in R, but it turns out that reading xls and xlsx into R is a real pain, and can go horribly wrong. We'll first make a csv file we can use.
 
 ```{r, echo=F, }
 snark1=read.csv("./raw_data/lewis_snark.csv")
@@ -277,8 +272,6 @@ write.csv(snark, "./data_files/snark.csv", row.names=F)
 str(snark)
 ```
 
-
-
 And now we'll have an actual look at the data using a couple of kinds of plots. These sorts of visualisations are really helpful in picking up gross errors. 
 
 ```{r}
@@ -288,20 +281,45 @@ boxplot(snark[,"l_1"]~snark[,"sex"]+snark[,"pop"])
 
 ```
 
-**Exercise 12: Let's check for outliers using boxplot, and delete them. We can use logical operators for this.**
-```{r, echo=F, }
-boxplot(snark[,"l_7"]~snark[,"sex"]+snark[,"pop"])
+Notice the boxplot formula format. This is going to come up many times - it's the general R specification for a model. A dependent variable followed by a tilde, and a nominally complicated equation with a bunch of predictors.
+
+**Exercise 13: Let's check for outliers using boxplot, and delete them. We can use logical operators for this.**
+```{r, echo=F}
+#boxplot(snark[,"l_1"]~snark[,"sex"]+snark[,"pop"])
+snark=snark[which(snark[,"l_1"]<800),]
+#boxplot(snark[,"l_1"]~snark[,"sex"]+snark[,"pop"])
+
+#boxplot(snark[,"l_7"]~snark[,"sex"]+snark[,"pop"])
 snark=snark[which(snark[,"l_7"]<800),]
-boxplot(snark[,"l_7"]~snark[,"sex"]+snark[,"pop"])
+#boxplot(snark[,"l_7"]~snark[,"sex"]+snark[,"pop"])
 
 ```
 
-**Exercise 11: the Snarks need individual id numbers. Create an id column (hint, all you need is the combine function c(), and a range). Add it to the dataset using cbind()**
+...and since we're doing plots anyway, have a play with the famous plot(), and a slightly easier-to-write syntax:
+
+```{r}
+plot(l_10~w_10, data=snark)
+
+plot(l_10~w_10, data=snark[which(snark[,"sex"]==0),], col="red")
+points(l_10~w_10, data=snark[which(snark[,"sex"]==1),], col="blue")
+```
+
+
+**a zombigenic parasitoid beaver.**
+![alt text](figures/zombigenic_beaver.jpg)
+
+**Exercise 14: the Snarks need individual id numbers. Create an id column (hint, all you need is the combine function c(), and a range). Add it to the dataset using cbind()**
+```{r, echo=F}
+id=c(1:nrow(snark))
+snark=cbind(snark[,1:3], id, snark[4:length(snark)])
+```
+
 
 # Loops
 
-
 The structure of loops (and nesting in general) in R is a prefix, followed by a pair of curly brackets. For loops take a condition with a nominal index variable, and continue until the index reaches a set point. Notice, you don't have to do anything to the index variable.
+
+The syntax is pretty similar to Python syntax. Also notice, even though R doesn't care if you indent, you should *always* use standard nested indentation for multi-line commands using brackets.
 
 ```{r}
 for(i in 1:10){
@@ -317,66 +335,23 @@ for(i in 1:20){
   }
 ```
 
-Another step in formatting data is giving the columns names we can use. Informative column headers, that aren't impossible to type. We've already used the colnames function, but there are a lot of columns of data in this dataset. Moreover, the columns are pretty repetitive. We can use a loop to generate the names automatically.
-
-
-**Exercise 12: Use a for-loop, and the c() and paste() functions, to come up with a set of column labels. Change the column names of the dataset**
-We'll break this into parts. First, we want a vector that contains the first 3 names column names (pop, sex, and family)
-
-Then, within the loop, for each one of the 5 days, we'll generate a name for the length, the width, the area, and the body. For instance, the day 1 length column might be named paste("length_", 1, sep="")
-Once these are generated, we'll attach them together into the names vector using c().
-
-Finally, we'll rename the columns using col.names()
-
 # Data summarizing. 
+
 
 R has a bunch of built in functions to summarise data, like max, min, mean and sd (standard deviation). We can apply these to columns (R is a little picky about how you apply functions to rows). So we can find out, for instance, what the size of the largest snark on day 13 is using 
 
+
+
 ```{r}
-snark=read.csv("raw_data/snark.csv", as.is=T)
 max(snark[,"bod_13"])
-
-```
-
-Whoops!
-```{r}
+#whoops!
 max(snark[,"bod_13"], na.rm=T)
 
 ```
 
-**Exercise 13: Use a for-loop to make max, min and mean summaries of each of the columns. Store it as a dataframe, with the columns corresponding to the columns of snark.**  
-
-Hint, the for loop will look something like this:
-summary=c()
-for(i in 5:length(snark)){
-  ??????
-  ??????
-}
-
-You can visualise the summaries using plotting functions like hist  
-```{r}
-hist(snark[,"bod_13"])
-
-hist(log(snark[,"bod_13"]))
-
-```
+**Exercise 15: Use a for-loop, and print max() and mean() summaries for all measurements for all days**
 
 
-But of course, what we really want is to extract patterns. For instance differences by sex, or population. For this, we can use other plotting packages like boxplot. For, we use a common expression for formulas in R, where the dependent variable is on the left, and any number of predictors are on the left.
-
-```{r}
-boxplot(snark[,"l_1"]~snark[,"pop"]+snark[,"family"])
-boxplot(l_1~pop + family, data=snark)
-
-```
-
-Whoops - probably too many categories. Try something more sensible.  
-
-**Exercise 14: do a boxplot of day 13 body size and cephalocalypsis area grouped by sex and  population. Try to plot the ratio of body size and cephalocalypsis area by sex and population. Which population do you think is most plagued by zombigenic parasitoid beavers?**  
-
-
-**a zombigenic parasitoid beaver.**
-![alt text](figures/zombigenic_beaver.jpg)
 
 Before we go any further, it's critical that we get the data into the right *shape*. By this we mean one row, one observation. Almost any analysis we do (for instance, regression across time) will require this format. While Drs Lewis and Bellman entered the data by individual, we need to reshape the data for such that each day is a row (so-called long format).
 
@@ -390,14 +365,24 @@ To do that, we use a handy function called reshape. We can specify our
 * importantly, *sep* value, so that reshape can parse the column names 
 
 
-**Exercise 15: reshape the data, call it snarkLong**  
+**Exercise 16: reshape the data, call it snarkLong**  
+
+```{r, echo=FALSE}
+
+snarkLong=reshape(snark, varying=c(5:length(snark)), direction="long", idvar="id", timevar="day", sep="_")
+
+```
+Now we can do cool things like:
+
+```{r}
+plot(l~day, data=snarkLong)
+```
+
 
 
 If we want to do hypothesis testing, one of the most basic tools we have is linear regression. It turns out, this is really easy to do in R. You use the same syntax as with the boxplot, but the function is called **lm**. Linear modelling is able to handle  both categorical and quantitative data.
 
 ```{r}
-snarkLong=read.csv("./raw_data/snarkLong.csv", sep=",", header=T, as.is=T)
-head(snarkLong)
 sexSize=lm(bod~sex, data=snarkLong[which(snarkLong[,"day"]==13),])
 summary(sexSize)
 ```
@@ -410,7 +395,7 @@ abline(cephGrow)
 ```
 
 
-**Exercise 16: write linear models to test whether there is variation in growth rate of body and cephalocalypse by sex, population and family**
+**Exercise 17: write linear models to test whether there is variation in growth rate of body and cephalocalypse by sex, population and family**
 
 
 # Doing more than one thing at a time 
@@ -428,9 +413,9 @@ sexSum=ddply(snarkLong, .(sex, day), summarise,
 
 sexSum
 ```
-**Exercise 17: summarise n, mean, min, max, sd, area, and cephalocalypse:body ratio by sex, population and day**
+**Exercise 18: summarise n, mean, min, max, sd, area, and cephalocalypse:body ratio by sex, population and day**
 
-#The full flexibility of doing more than one thing at a time requires you to write your own functions...  
+#The full flexibility of doing particular things to particular stuff requires you to write your own functions...  
 
 So far, we've talked about, and used a lot of functions, but haven't looked at them carefully. We haven't needed to, because R has so many useful built in functions, and libraries of other functions we can download and use. But even with all of this, we're quickly going to find we need something that someone else hasn't written. And for that, we need to write our own.  
 
@@ -438,10 +423,38 @@ Fortunately, this isn't too hard. We just need to keep track of what we're putti
 
 * putting in: ALL the things, and ONLY the things you're going to use in the function
 * taking out: a single result.
-* functions are like vegas: whatever happens in a function, stays in a function. Nothing outside the function changes, except what you pass out.
+* functions are like Vegas: whatever happens in a function, stays in a function. Nothing outside the function changes, except what you pass out.
 
+The way to define a function is pretty simple. It just needs a name, and a list of the required arguments. One other required element is a return value - the result of the function.
 
+```{r, error=TRUE}
 
+gardeniaGrowth=function(sun, name, gardenia){
+  height=gardenia[which(gardenia[,"name"]==name),"height"]
+  newGrowth=height*sun
+  newHeight=newGrowth+height
+  return(newHeight)
+}
+
+clariceGrowth=gardeniaGrowth(2.1, "clarice", gardenia)
+hannibalGrowth=gardeniaGrowth(2, "hannibal", gardenia)
+lucreciaGrowth=gardeniaGrowth(1.5, "lucrecia", gardenia)
+
+print(clariceGrowth)
+print(hannibalGrowth)
+print(lucreciaGrowth)
+
+print(newHeight)
+```
+
+# Exercise 19: write a function that, for a given sex and family, calculates the mean rate of growth as the ratio between the (average) initial size, and the (average) change in size between the first and last day.
+
+```{r}
+growthRate=function(day1_data, day13_data){
+  #??????
+  #??????
+}
+```
 
 
 

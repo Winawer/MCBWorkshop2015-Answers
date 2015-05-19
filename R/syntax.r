@@ -66,50 +66,28 @@ snark[which(snark[,"sex"]=="female"),2]=0
 snark[which(snark[,"sex"]=="m"),2]=1
 snark[which(snark[,"sex"]=="male"),2]=1  
 
-#**Exercise 11: the Snarks need individual id numbers. Create an id column (hint, all you need is c() and a range), and add it to the dataset using cbind()**
+#**Exercise 14: the Snarks need individual id numbers. Create an id column (hint, all you need is c() and a range), and add it to the dataset using cbind()**
 ind=c(1:nrow(snark))
 snark=cbind(snark[,1:3], ind, snark[4:length(snark)])
 
-#**Exercise 12: Use a for-loop, and the c() and paste() functions, to come up with a set of column labels. Change the column names of the dataset**
 
-colVec=c()
-
-for(i in 1:5){
-  day=i*3-2
-  var1=paste("l_", day, sep="")
-  var2=paste("w_", day, sep="")
-  var3=paste("a_", day, sep="")
-  var4=paste("bod_", day, sep="")
-  colVec=c(colVec, var1, var2, var3, var4)
+#**Exercise 15: Use a for-loop, and print max() and mean() summaries for all measurements for all days**
+```{r}
+head(snark)
+for (i in 5:length(snark)){
+  print(max(snark[,i], na.rm=T))  
+  print(mean(snark[,i], na.rm=T))
 }
+```
 
-colVec
-colVec=c("pop", "sex", "family", "id", colVec)
+#**Exercise 16: reshape the data and call it snarkLong**
+```{r}
+snarkLong=reshape(snark, varying=c(snark[,4:length(snark)]), timevar="day", idvar="id", sep="_")
 
-colnames(snark)
-colnames(snark)=colVec
-
-#write.csv(snark, "./data_files/snark.csv", quote=F, row.names=F)
-
-#**Exercise 13: Use a for-loop to make max, min and mean summaries of each of the columns. Store it as a dataframe, with the columns corresponding to the columns of snark.**
-summary=c()
-for(i in 5:length(snark)){
-  maxVal=max(snark[,i], na.rm=T)
-  minVal=min(snark[,i], na.rm=T)
-  meanVal=mean(snark[,i], na.rm=T)
-  sumVec=c(maxVal, minVal, meanVal)
-  summary=cbind(summary, sumVec)
-}
-
-#**Exercise 14: do a boxplot of day 13 body size and cephalocalypsis area grouped by sex and  population. Try to plot the ratio of body size and cephalocalypsis area by sex and population.****
-boxplot(bod_13~sex +pop, data=snark)
-boxplot((a_13/bod_13)~sex+ pop, data=snark)
-
-#Exercise 15: Reshape the data 
-snarkLong=reshape(snark, varying=c(5:length(snark)), idvar="id", direction="long", timevar="day", sep="_")
+```
 
 
-#**Exercise 16 write linear models to test whether there is variation in growth rate of body and cephalocalypse by sex, population and family**
+#**Exercise 17 write linear models to test whether there is variation in growth rate of body and cephalocalypse by sex, population and family**
 
 bodGrow=lm(bod~day+ sex +pop+family, data=snarkLong)
 cephGrow=lm(a~day+ sex +pop+family, data=snarkLong)
@@ -117,7 +95,7 @@ cephGrow=lm(a~day+ sex +pop+family, data=snarkLong)
 
 write.csv(snarkLong, "./data_files/snarkLong.csv", row.names=F, quote=F)
 
-# **Exercise 17: summarise n, mean, min, max, sd, area, and cephalocalypse:body ratio by sex, population and day**
+# **Exercise 18: summarise n, mean, min, max, sd, area, and cephalocalypse:body ratio by sex, population and day**
 sexSum=ddply(snarkLong, .(sex, pop, day), summarise, 
              N= length(bod),
              aMean=mean(a, na.rm=T),
@@ -126,6 +104,5 @@ sexSum=ddply(snarkLong, .(sex, pop, day), summarise,
              aRat=mean(a, na.rm=T)/mean(bod, na.rm=T))
 
 
-1A=56
 
 
