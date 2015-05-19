@@ -86,7 +86,7 @@ Examination of the plot should highlight the errors in the data.  It seems quite
 
 When you reach this point, ask one of the instructors for the link to download the corrected data.  When you have it, re-run the analysis with the corrected data.  
 
-Once you've done that, return to the Python section.  Write a new function, ```yearly_maximum``` that calculates the yearly maximum temperature and re-run the analsis.
+Once you've done that, return to the Python section.  Write a new function, ```yearly_maximum``` that calculates the yearly maximum temperature and re-run the analysis.
 
 ---
 

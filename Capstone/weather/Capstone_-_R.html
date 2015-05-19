@@ -88,9 +88,9 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 <h4>Task</h4>
 <p>Plot histograms of the temperature, latitude, longitude, and month variables. Do they make sense?</p>
 <hr />
-<p>You’ve probably noticed by now that there are some odd features to this data. At this point, your goal is to determine what the error might be. Use your knowledge of Python and R to track down where the error comes from in the data. Is it specific to a particular time or place?</p>
+<p>You’ve probably noticed by now that there are some odd features to this data. At this point, your goal is to determine what the error might be. Use your knowledge of Python and R to track down where the error comes from in the data. Is it specific to a particular time or place? <em>It is important to note that entries of all 9s indicate missing data / observations.</em></p>
 <p>Having identified the problem, we will need to go back and fix it. However, before we do that, let’s take a look at more interesting plot. This plot leverages some of R’s more advanced plotting procedures and libraries, such as <code>ggplot</code>. The details of this plotting command would take more space than we have here to explain, but googling the components of the command and exploring the help files associated with <code>ggplot</code> may prove enlightning.</p>
-<p><em>Note that the plotting code uses the pre-made temperature file stored in <code>data/min_temp_readings.csv</code>.</em></p>
+<p><em>Note that the plotting code uses the pre-made temperature file stored in <code>data/min_temp_readings.csv</code>. When making your own plots, change the code to point to your processed data file.</em></p>
 <pre class="r"><code>library(ggplot2)
 library(maps)
 library(maptools)
@@ -116,7 +116,9 @@ print(bm)</code></pre>
 </div>
 <div id="task-4" class="section level4">
 <h4>Task</h4>
-<p>When you reach this point,</p>
+<p>When you reach this point, ask one of the instructors for the link to download the corrected data. When you have it, re-run the analysis with the corrected data.</p>
+<p>Once you’ve done that, return to the Python section. Write a new function, <code>yearly_maximum</code> that calculates the yearly maximum temperature and re-run the analysis.</p>
+<hr />
 </div>
 <div class="footnotes">
 <hr />
