@@ -1,4 +1,4 @@
-Several friends from differnt universities were involved in a hardy-gardenia breeding contest. The gardenias are to be used to terraform Mars, so they need to be tough. The gardenias were scored for several traits indicative of vigor.
+Several friends from different universities were involved in a hardy-gardenia breeding contest. The gardenias are to be used to terraform Mars, so they need to be tough. The gardenias were scored for several traits indicative of vigor.
     name = contestant's name
     uni = the institution at which they work
     height = the height of the gardenia in inches a month after germination
